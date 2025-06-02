@@ -318,6 +318,8 @@ body {
         backdrop-filter: blur(10px);
         transition: width var(--transition-normal);
         display: none;
+        overflow-y: scroll;
+        scrollbar-width: none;
 
         i {
             color: var(--text-secondary);
@@ -372,6 +374,7 @@ body {
             gap: 0.5rem;
             overflow: hidden;
             scrollbar-width: none;
+            position: relative;
 
             li {
                 margin: 0.25rem 0;
