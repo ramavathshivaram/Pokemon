@@ -1,0 +1,91 @@
+:root {
+    --backgroundColor: hsl(210, 30%, 95%);
+    --bg-primary: hsl(0, 0%, 100%);
+    --bg-secondary: hsl(210, 30%, 98%);
+    --text-primary: hsl(210, 25%, 15%);
+    --text-secondary: hsl(210, 15%, 35%);
+    --accent-color: hsl(216, 98%, 52%);
+    --accent-hover: hsl(216, 98%, 42%);
+    --card-bg: hsl(0, 0%, 100%);
+    --border-color: hsl(210, 20%, 92%);
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --primary-gradient: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
+
+#aboutContainer {
+  width: 100%;
+  height: calc(100vh - 50px);
+  background-color: var(--glass-bg);
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--primary-gradient);
+    }
+}
+
+#aboutContainer form {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-bg);
+  width: 400px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  margin: auto;
+  border-radius: 1rem;
+}
+
+#aboutContainer form label {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: var(--accent-color);
+}
+
+#aboutContainer form input {
+  width: 80%;
+  height: 30px;
+  margin-bottom: 10px;
+  padding: 5px;
+  font-size: 16px;
+  border: 1px solid var(--border-color);
+  background-color: transparent;
+  border-radius: 0.5rem;
+}
+
+#aboutContainer form div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#aboutContainer form button {
+  padding: 5px 10px;
+  width: auto;
+  border: 1px solid var(--card-bg);
+  background-color: var(--glass-bg);
+  color: var(--text-primary);
+}
+.welcome{
+   width: 100%;
+   display: flex;
+   justify-content: space-between;
+   padding: 5px 30px;
+}

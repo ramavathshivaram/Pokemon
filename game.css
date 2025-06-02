@@ -1,0 +1,233 @@
+:root {
+   --backgroundColor: hsl(210, 30%, 95%);
+   --bg-primary: hsl(0, 0%, 100%);
+   --bg-secondary: hsl(210, 30%, 98%);
+   --text-primary: hsl(210, 25%, 15%);
+   --text-secondary: hsl(210, 15%, 35%);
+   --accent-color: hsl(216, 98%, 52%);
+   --accent-hover: hsl(216, 98%, 42%);
+   --card-bg: hsl(0, 0%, 100%);
+   --border-color: hsl(210, 20%, 92%);
+   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+   --transition-fast: 0.2s ease;
+   --transition-normal: 0.3s ease;
+   --glass-bg: rgba(255, 255, 255, 0.8);
+   --glass-border: rgba(255, 255, 255, 0.3);
+   --primary-gradient: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
+
+#gameContainer {
+   width: 100%;
+   height: calc(100vh - 50px);
+   display: flex;
+   padding: 5px;
+   gap: 5px;
+   position: relative;
+   color: var(--primary);
+
+   &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--primary-gradient);
+   }
+
+   /* -------------------------------ASIDE BAR--------------------------------------- */
+   aside {
+      width: 0;
+      height: 100%;
+      border: 2px solid var(--glass-border);
+      padding: 0;
+      border-radius: 1rem;
+      overflow: hidden;
+      background-color: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      display: none;
+      transition: width 0.3s ease, border 0.3s ease;
+
+      h3 {
+         margin: 25px 0 20px 30px;
+      }
+
+      ul {
+         width: 100%;
+         list-style: none;
+         overflow: hidden;
+         scrollbar-width: none;
+
+         li {
+            margin: 3px;
+            cursor: pointer;
+            height: 30px;
+            width: 70%;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin: 0;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text-primary);
+            transition: all var(--transition-fast);
+
+            &:hover {
+               background-color: var(--bg-secondary);
+               transform: translateX(0.5rem);
+            }
+         }
+      }
+   }
+
+   aside.active {
+      width: 300px;
+      display: block;
+   }
+
+   /* -------------------------------ASIDE BAR TOGGLER----------------------------------- */
+   #gameAsideToggle {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      bottom: 2rem;
+      left: 4rem;
+      border-radius: 50%;
+      background-color: var(--accent-color);
+      padding: 10px;
+      cursor: pointer;
+   }
+
+   #game-wrapper {
+      width: 100%;
+      border: 2px solid var(--glass-border);
+      background-color: var(--glass-bg);
+      border-radius: 1rem;
+
+      /* ----------------------GUES THHE POKEMON GAME-------------------------- */
+      #GuesThePokemon {
+         width: 100%;
+         position: relative;
+         display: block;
+         flex-direction: column;
+         align-items: center;
+         gap: 10px;
+         padding-top: 20px;
+
+         h1 {
+            text-align: center;
+         }
+
+         .scoreBoard {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            text-align: end;
+            color: var(--accent-color);
+         }
+
+         .pokemonImageContainer {
+            width: 100%;
+            max-width: 500px;
+            height: 350px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+            margin-top: 20px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+
+            #pokemon-image {
+               width: 100%;
+               height: 100%;
+               filter: brightness(0);
+               object-fit: contain;
+               transition: filter 0.3s ease;
+            }
+         }
+
+         #optionContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 20px;
+
+            button {
+               padding: 5px 10px;
+               height: 40px;
+               width: 100px;
+               border-radius: 5px;
+               border: 1px solid var(--primary);
+               background-color: var(--card-bg);
+               color: var(--text-primary);
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               cursor: pointer;
+               text-transform: capitalize;
+               transition: background-color 0.3s ease;
+
+               &:hover {
+                  background-color: var(--accent-hover);
+               }
+            }
+         }
+
+         #hint {
+            width: 200px;
+            height: 50px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-transform: capitalize;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1rem auto;
+         }
+
+         #hint.active {
+            border: 1px solid var(--primary);
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+         }
+
+         .hintAndNext {
+            width: 100%;
+            padding: 0 10%;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+
+            #next-button,
+            #hintBtn {
+               width: 100px;
+               height: 50px;
+               padding: 10px 15px;
+               border-radius: 5px;
+               text-transform: capitalize;
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               border: 1px solid var(--primary);
+               background-color: var(--card-bg);
+               color: var(--text-primary);
+               cursor: pointer;
+            }
+         }
+      }
+
+      /* ---------------------------------------------------------------------------- */
+
+
+   }
+}

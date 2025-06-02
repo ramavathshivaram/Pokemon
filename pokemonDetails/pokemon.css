@@ -1,0 +1,577 @@
+:root {
+    --backgroundColor: hsl(210, 30%, 95%);
+    --bg-primary: hsl(0, 0%, 100%);
+    --bg-secondary: hsl(210, 30%, 98%);
+    --text-primary: hsl(210, 25%, 15%);
+    --text-secondary: hsl(210, 15%, 35%);
+    --accent-color: hsl(216, 98%, 52%);
+    --accent-hover: hsl(216, 98%, 42%);
+    --card-bg: hsl(0, 0%, 100%);
+    --border-color: hsl(210, 20%, 92%);
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --card-bg-dark: rgba(17, 24, 39, 0.95);
+    --primary-gradient: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
+
+#pokemonDetailsContainer {
+    height: calc(100vh - 50px);
+    padding: 0.5rem;
+    gap: 5px;
+    overflow: hidden;
+    position: relative;
+    color: var(--modeColor);
+    padding: 0.5rem;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--primary-gradient);
+    }
+
+    #listContainer {
+        display: none;
+        width: 0;
+        height: 100%;
+        border-radius: 10px;
+        overflow: hidden;
+        transition: all 0.5s ease;
+        color: var(--text-primary);
+        background-color: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--glass-border);
+        border-radius: 1rem;
+        transition: all var(--transition-normal);
+
+
+        h3 {
+            text-align: center;
+            margin: 15px 0 0 0;
+            height: 30px;
+            color: var(--accent-color);
+        }
+
+        #dataList {
+            overflow-y: scroll;
+            height: 100%;
+            padding: 5px;
+            padding-bottom: 20px;
+            overflow: scroll;
+            scrollbar-width: none;
+
+            li {
+                font-size: 0.9rem;
+                cursor: pointer;
+                height: 30px;
+                margin: 5px 0;
+                width: 100%;
+                text-align: center;
+                height: 30px;
+                line-height: 30px;
+                position: relative;
+                background-color: transparent;
+                transition: scale 0.3s ease;
+                border: 1px solid var(--accent-color);
+                border-radius: 1rem;
+
+                &:hover {
+                    background-color: var(--accent-color);
+                }
+            }
+        }
+    }
+
+    #listContainer.active {
+        width: 350px;
+        border: 2px solid var(--glass-border);
+display: block;
+    }
+
+
+    .cardsContainer {
+        height: 100%;
+        width: 100%;
+        color: var(--text-primary);
+        background-color: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border: 2px solid var(--glass-border);
+        transition: all var(--transition-normal);
+        overflow: hidden;
+        border-radius: 1rem;
+    }
+
+    .navToggle {
+        height: 50px;
+        color: var(--text-primary);
+        background-color: var(--accent-color);
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        position: relative;
+        border: 1px solid var(--primary);
+    }
+
+    .navToggle i {
+        font-size: clamp(1rem, 3vw, 3rem);
+    }
+
+    .navToggle h2 {
+        width: 50%;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .cards {
+        width: 100%;
+        height: calc(100vh - 110px);
+        position: relative;
+        background-color: transparent;
+    }
+
+    .pokemonContainer {
+        width: 100%;
+        height: 100%;
+        padding: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        position: relative;
+        overflow-y: scroll;
+        scrollbar-width: none;
+    }
+
+    .pokemonContainer #id {
+        font-size: 1.2rem;
+        position: fixed;
+        top: 5rem;
+        right: 1rem;
+        color: var(--text-primary);
+    }
+
+    .pokemonContainer .pokemonAvatar {
+        width: 80%;
+        height: 45%;
+        background-color: var(--card-bg);
+        border: 2px solid var(--border-color);
+        border-radius: 1rem;
+    }
+
+    .pokemonContainer .pokemonAvatar .image {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 4/3;
+        object-fit: contain;
+        filter: brightness(0.75) contrast(2);
+    }
+
+    .pokemonContainer .pokemonWrapper {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+    }
+
+    .pokemonWrapper .pokemonDetails,
+    .pokemonWrapper .pokemonData {
+        width: 100%;
+        height: 100%;
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 1rem;
+        position: relative;
+        overflow-y: scroll;
+        scrollbar-width: none;
+    }
+    .pokemonWrapper .pokemonData h3{
+        text-align: center;
+        margin-top: 1rem;
+        margin-bottom: -1.5rem;
+        text-transform: uppercase;
+        color: var(--accent-color);
+        text-decoration: underline;
+        letter-spacing: 1px;
+    }
+
+    .pokemonDetails .typeIcons {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .typeIcons img {
+        width: 40px;
+    }
+
+    .basicImformation {
+        width: 100%;
+        display: flex;
+    }
+
+    .pokemonDetails .basicImformation div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .pokemonDetails .basicImformation .border {
+        border-left: 2px solid var(--accent-hover);
+        border-right: 2px solid var(--accent-hover);
+    }
+
+    .pokemonDetails div {
+        width: 100%;
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    .pokemonDetails h3 {
+        color: var(--accent-color);
+        margin: 15px 0;
+        text-align: center;
+    }
+
+    .pokemonDetails .species .information {
+        font-weight: 450;
+        width: 100%;
+        height: 300px;
+        padding: 5px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .pokemonDetails .species .information span {
+        padding: 5px;
+        border: 1px solid var(--border-color);
+        border-radius: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: transfrom 0.3s ease;
+
+        &:hover{
+            transform: translateY(-5px);
+            background-color: var(--accent-hover);
+        }
+    }
+
+    .pokemonDetails .species .information span li,
+    .pokemonDetails .species .information span p {
+        color: var(--text-primary);
+        line-height: 30px;
+        font-size: 0.9rem;
+        font-weight: 900;
+        font-style: italic;
+    }
+
+    .pokemonDetails .species .information span p {
+        color: var(--accent-color);
+    }
+
+    .pokemonDetails .species .information .informationLastChild {
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+
+    .pokemonDetails .species .information .informationLastChild li {
+        color: var(--accent-color);
+    }
+
+    /* weaknessAndResisrance */
+    .weaknessAndResisrance {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        padding: 0 1rem 1rem 0.5rem;
+        margin-top: -1rem;
+
+        .weakness,
+        .resistances {
+            background: var(--card-bg-light);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+
+            &:hover {
+                transform: translateY(-3px);
+                box-shadow: var(--shadow-soft);
+            }
+
+            h4 {
+                padding: 1rem;
+                text-align: center;
+                font-weight: 700;
+                background: var(--primary-gradient);
+                color: white;
+                font-size: 0.9rem;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+            }
+
+            div {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
+                padding: 0.5rem;
+
+                img {
+                    width: 45px;
+                    height: 45px;
+                    aspect-ratio: 1;
+                    padding: 0.25rem;
+                    border-radius: 8px;
+                    transition: all 0.3s ease;
+                    background: rgba(255, 255, 255, 0.05);
+                    border: 1px solid var(--border-light);
+
+                    &:hover {
+                        transform: scale(1.2);
+                        background: var(--secondary-gradient);
+                    }
+                }
+            }
+        }
+    }
+
+
+    .buttomContainer {
+        width: 100%;
+        margin: 10px 0;
+        display: flex;
+        justify-content: space-evenly;
+        gap: 10px;
+    }
+
+    .buttomContainer button {
+        width: 100px;
+        height: 40px;
+        font-weight: 600;
+        color: var(--text-primary);
+        border: 1px solid var(--border-color);
+        background-color: var(--card-bg);
+        border-radius: 1rem;
+        padding: 7px 10px;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    .buttomContainer button:hover {
+        background-color: var(--accent-color);
+    }
+
+    /* moves style */
+    .movesContainer {
+        width: 100%;
+        height: calc(100vh - 115px);
+        overflow-y: scroll;
+        scrollbar-width: none;
+        padding-top: 70px;
+        position: relative;
+
+        .moves-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        }
+    }
+
+
+    .movesContainer .moves-list button {
+        width: 100%;
+        height: 100%;
+        color: var(--text-primary);
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+    }
+
+    .back {
+        width: 100%;
+        padding: 20px 0 10px 20px;
+        position: absolute;
+        top: 0;
+        font-size: 2rem;
+    }
+
+
+    .movesContainer .moves-list button:hover {
+        background-color: var(--accent-hover);
+        color: var(--text-secondary);
+    }
+
+    /* Modal styles */
+    .modal {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        padding: 1rem;
+        color: var(--text-primary);
+    }
+
+    .modal-content {
+           width: 100%;
+            max-width: 700px;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 1rem;
+            padding-top: 2rem;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+
+    }
+
+    .close-modal {
+        color: var(--accent-color);
+        font-size: 2rem;
+        font-weight: bold;
+        pointer-events: unset;
+        cursor: pointer;
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+    }
+
+    .close-modal:hover,
+    .close-modal:focus {
+        color: red;
+    }
+
+    .moves-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        padding: 20px;
+    }
+
+    .moves-list .button {
+        padding: 8px 12px;
+        border: 1px solid hsl(0, 0%, 0%);
+        background-color: hsla(0, 0%, 0%, 0.171);
+        color: rgb(2, 2, 2);
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .moves-list .button:hover {
+        background-color: hsl(0, 0%, 100%);
+        color: hsla(0, 0%, 0%, 0.782);
+        border: 1px solid hsla(0, 0%, 0%, 0.5);
+    }
+
+    .bio-list {
+        background-color: var(--glass-bg);
+
+        li {
+            padding: 1rem;
+            background-color: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 1rem;
+            margin: 1rem;
+            letter-spacing: 1px;
+
+            &:hover {
+                box-shadow: 0 2px 2px var(--text-secondary);
+            }
+        }
+    }
+
+    .abilities-list {
+        margin-top: 70px;
+        padding: 10px;
+
+        .button {
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            padding: 5px 10px;
+            width: 100px;
+            height: 40px;
+            margin: 10px;
+            border-radius: 1rem;
+        }
+    }
+
+    #moveDetails{
+        width: 100%;
+    }
+
+    #moveDetails h3 {
+        text-align: center;
+        text-decoration: underline;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+    }
+
+    #moveDetails p {
+        color: var(--text-primary);
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        text-align: left;
+        margin: 5px;
+        gap: 10px;
+    }
+
+    #moveDetails p strong {
+        text-align: center;
+    }
+
+    @media (max-width:900px) {
+        .pokemonContainer .pokemonWrapper {
+            grid-template-columns: 1fr;
+        }
+
+        .pokemonWrapper .pokemonDetails,
+        .pokemonWrapper .pokemonData {
+            overflow: unset;
+        }
+
+        .pokemonData .stats .percentage {
+            width: 40px;
+        }
+    }
+}
+
+body.dark-mode #pokemonDetailsContainer {
+    .statsContainer .card::before {
+        background-color: var(--card-bg-dark);
+    }
+
+    .weakness,
+    .resistances {
+        background: var(--card-bg-dark);
+    }
+}
