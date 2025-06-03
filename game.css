@@ -27,16 +27,6 @@
    position: relative;
    color: var(--primary);
 
-   &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: var(--primary-gradient);
-   }
-
    /* -------------------------------ASIDE BAR--------------------------------------- */
    aside {
       width: 0;
@@ -102,6 +92,7 @@
       background-color: var(--accent-color);
       padding: 10px;
       cursor: pointer;
+      z-index: 99999;
    }
 
    #game-wrapper {

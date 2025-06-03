@@ -28,16 +28,6 @@
     color: var(--modeColor);
     padding: 0.5rem;
 
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: var(--primary-gradient);
-    }
-
     #listContainer {
         display: none;
         width: 0;
@@ -93,7 +83,7 @@
     #listContainer.active {
         width: 350px;
         border: 2px solid var(--glass-border);
-display: block;
+        display: block;
     }
 
 
@@ -193,7 +183,8 @@ display: block;
         overflow-y: scroll;
         scrollbar-width: none;
     }
-    .pokemonWrapper .pokemonData h3{
+
+    .pokemonWrapper .pokemonData h3 {
         text-align: center;
         margin-top: 1rem;
         margin-bottom: -1.5rem;
@@ -262,7 +253,7 @@ display: block;
         align-items: center;
         transition: transfrom 0.3s ease;
 
-        &:hover{
+        &:hover {
             transform: translateY(-5px);
             background-color: var(--accent-hover);
         }
@@ -433,22 +424,22 @@ display: block;
     }
 
     .modal-content {
-           width: 100%;
-            max-width: 700px;
-            height: auto;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            padding: 1rem;
-            padding-top: 2rem;
-            box-shadow: var(--shadow-md);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
+        width: 100%;
+        max-width: 700px;
+        height: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: var(--card-bg);
+        border-radius: 16px;
+        padding: 1rem;
+        padding-top: 2rem;
+        box-shadow: var(--shadow-md);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
 
     }
 
@@ -525,7 +516,7 @@ display: block;
         }
     }
 
-    #moveDetails{
+    #moveDetails {
         width: 100%;
     }
 
