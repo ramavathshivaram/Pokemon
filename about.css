@@ -19,69 +19,116 @@
 }
 
 #aboutContainer {
-  width: 100%;
-  height: calc(100vh - 50px);
-  background-color: var(--glass-bg);
-  padding: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: var(--primary-gradient);
-    }
+    width: 100%;
+    height: calc(100vh - 50px);
+    background-color: var(--bg-secondary);
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+#aboutContainer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--primary-gradient);
+    z-index: 2;
 }
 
 #aboutContainer form {
-  background-color: var(--card-bg);
-  border: 1px solid var(--card-bg);
-  width: 400px;
-  height: 500px;
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-  margin: auto;
-  border-radius: 1rem;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-lg);
+    transition: all var(--transition-normal);
+}
+
+#aboutContainer form:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
 }
 
 #aboutContainer form label {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: var(--accent-color);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
 }
 
 #aboutContainer form input {
-  width: 80%;
-  height: 30px;
-  margin-bottom: 10px;
-  padding: 5px;
-  font-size: 16px;
-  border: 1px solid var(--border-color);
-  background-color: transparent;
-  border-radius: 0.5rem;
+    width: 100%;
+    height: 48px;
+    margin-bottom: 1.5rem;
+    padding: 0 1rem;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-secondary);
+    border-radius: 0.5rem;
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+}
+
+#aboutContainer form input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
 #aboutContainer form div {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
 }
 
 #aboutContainer form button {
-  padding: 5px 10px;
-  width: auto;
-  border: 1px solid var(--card-bg);
-  background-color: var(--glass-bg);
-  color: var(--text-primary);
+    padding: 0.75rem 1.5rem;
+    width: auto;
+    border: none;
+    background: var(--primary-gradient);
+    color: white;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+#aboutContainer form button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+#aboutContainer form #loginToRegister,
+#aboutContainer form #registerLogin {
+    background: none;
+    color: var(--accent-color);
+    font-weight: 600;
+    border: 1px solid var(--accent-color);
+}
+
+#aboutContainer form .forgotpasswd {
+    display: block;
+    text-align: center;
+    margin-top: 1.5rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.875rem;
+}
+
+#aboutContainer form .forgotpasswd:hover {
+    color: var(--accent-color);
 }
 .welcome{
    width: 100%;

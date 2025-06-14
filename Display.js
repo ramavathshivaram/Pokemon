@@ -9,7 +9,7 @@ import {
 function displayFirstPokemon(pokemon) {
     const firstPokemonContainer = document.getElementById("firstPokemonContainer");
     document.getElementById("firstPokemonName").innerText = `${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}`;
-    firstPokemonContainer.innerHTML =displayComparePokemon(pokemon)
+    firstPokemonContainer.innerHTML = displayComparePokemon(pokemon)
     let icons = createIcons(pokemon);
     firstPokemonContainer.querySelector(".typeIcons").appendChild(icons);
 }
@@ -17,13 +17,13 @@ function displayFirstPokemon(pokemon) {
 function displaySecondPokemon(pokemon) {
     const secondPokemonContainer = document.getElementById("secondPokemonContainer");
     document.getElementById("secondPokemonName").innerText = `${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}`;
-    secondPokemonContainer.innerHTML =displayComparePokemon(pokemon)
+    secondPokemonContainer.innerHTML = displayComparePokemon(pokemon)
     let icons = createIcons(pokemon);
     secondPokemonContainer.querySelector(".typeIcons").appendChild(icons);
 }
 
-function displayComparePokemon(pokemon){
-    
+function displayComparePokemon(pokemon) {
+
     let typeColor = pokemonTypes.find(t =>
         t.name.toLowerCase() === pokemon.types[0].toLowerCase()
     )?.color || "#ccc";
@@ -66,7 +66,7 @@ async function displayPokemonList(batchResults) {
         li.addEventListener("click", () => {
             displayPokemonDetails(pokemon);
             let currentPokemon = pokemon.id - 1;
-            localStorage.setItem("currentPokemon",JSON.stringify(currentPokemon))
+            localStorage.setItem("currentPokemon", JSON.stringify(currentPokemon))
         });
         dataList.appendChild(li);
     });
@@ -74,6 +74,11 @@ async function displayPokemonList(batchResults) {
 
 async function displayPokemonDetails(pokemon) {
     try {
+        if (!pokemon) {
+            console.error("No pokemon provided to display");
+            return;
+        }
+
         const types = pokemon.types;
         let typeColor = pokemonTypes.find(t =>
             t.name.toLowerCase() === pokemon.types[0].toLowerCase()

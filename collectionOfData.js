@@ -23,24 +23,24 @@ import {
 let comparePokemonQueue = [];
 
 export const pokemonTypes = [
-    { name: "Normal", color: "hsl(60, 20%, 60%)", icon: "/assets/normal.png" },
-    { name: "Fire", color: "hsl(24, 87%, 56%)", icon: "/assets/fire.png" },
-    { name: "Water", color: "hsl(220, 73%, 68%)", icon: "/assets/water.png" },
-    { name: "Electric", color: "hsl(50, 93%, 61%)", icon: "/assets/electric.png" },
-    { name: "Grass", color: "hsl(100, 48%, 56%)", icon: "/assets/grass.png" },
-    { name: "Ice", color: "hsl(180, 53%, 73%)", icon: "/assets/ice.png" },
-    { name: "Fighting", color: "hsl(3, 65%, 45%)", icon: "/assets/fighting.png" },
-    { name: "Poison", color: "hsl(300, 43%, 47%)", icon: "/assets/poison.png" },
-    { name: "Ground", color: "hsl(40, 63%, 67%)", icon: "/assets/ground.png" },
-    { name: "Flying", color: "hsl(240, 73%, 75%)", icon: "/assets/flying.png" },
-    { name: "Psychic", color: "hsl(340, 90%, 66%)", icon: "/assets/psychic.png" },
-    { name: "Bug", color: "hsl(60, 50%, 45%)", icon: "/assets/bug.png" },
-    { name: "Rock", color: "hsl(45, 50%, 50%)", icon: "/assets/rock.png" },
-    { name: "Ghost", color: "hsl(260, 30%, 50%)", icon: "/assets/ghost.png" },
-    { name: "Dragon", color: "hsl(250, 93%, 60%)", icon: "/assets/dragon.png" },
-    { name: "Dark", color: "hsl(30, 20%, 35%)", icon: "/assets/dark.png" },
-    { name: "Steel", color: "hsl(240, 20%, 80%)", icon: "/assets/steel.png" },
-    { name: "Fairy", color: "hsl(350, 75%, 75%)", icon: "/assets/fairy.png" },
+    { name: "Normal", color: "hsl(60, 20%, 60%)", icon: "/assets/types/normal.png" },
+    { name: "Fire", color: "hsl(24, 87%, 56%)", icon: "/assets/types/fire.png" },
+    { name: "Water", color: "hsl(220, 73%, 68%)", icon: "/assets/types/water.png" },
+    { name: "Electric", color: "hsl(50, 93%, 61%)", icon: "/assets/types/electric.png" },
+    { name: "Grass", color: "hsl(100, 48%, 56%)", icon: "/assets/types/grass.png" },
+    { name: "Ice", color: "hsl(180, 53%, 73%)", icon: "/assets/types/ice.png" },
+    { name: "Fighting", color: "hsl(3, 65%, 45%)", icon: "/assets/types/fighting.png" },
+    { name: "Poison", color: "hsl(300, 43%, 47%)", icon: "/assets/types/poison.png" },
+    { name: "Ground", color: "hsl(40, 63%, 67%)", icon: "/assets/types/ground.png" },
+    { name: "Flying", color: "hsl(240, 73%, 75%)", icon: "/assets/types/flying.png" },
+    { name: "Psychic", color: "hsl(340, 90%, 66%)", icon: "/assets/types/psychic.png" },
+    { name: "Bug", color: "hsl(60, 50%, 45%)", icon: "/assets/types/bug.png" },
+    { name: "Rock", color: "hsl(45, 50%, 50%)", icon: "/assets/types/rock.png" },
+    { name: "Ghost", color: "hsl(260, 30%, 50%)", icon: "/assets/types/ghost.png" },
+    { name: "Dragon", color: "hsl(250, 93%, 60%)", icon: "/assets/types/dragon.png" },
+    { name: "Dark", color: "hsl(30, 20%, 35%)", icon: "/assets/types/dark.png" },
+    { name: "Steel", color: "hsl(240, 20%, 80%)", icon: "/assets/types/steel.png" },
+    { name: "Fairy", color: "hsl(350, 75%, 75%)", icon: "/assets/types/fairy.png" },
 ];
 
 
@@ -103,7 +103,7 @@ async function fetchPokemon(url) {
         const response = await fetch(url);
         if (!response.ok) throw new Error("Can't fetch the URL");
         const data = await response.json();
-        let sprite = `./sprites/${data.id}.png`
+        let sprite = `./assets/sprites/${data.id}.png`
 
         let types = data.types.map(t => t.type.name);
         let abilities = await fetchAbilities(data.abilities);
@@ -240,7 +240,7 @@ export function createIcons(pokemon) {
     const iconsHTML = pokemon.types
         .filter(type => type && typeof type === 'string')
         .map(type =>
-            `<img src="./assets/${type.toLowerCase()}.png" alt="${type}" class="type-icon" data-type="${type}">`
+            `<img src="./assets/types/${type.toLowerCase()}.png" alt="${type}" class="type-icon" data-type="${type}">`
         ).join('');
 
     icons.innerHTML = iconsHTML;

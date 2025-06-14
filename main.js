@@ -188,15 +188,18 @@ window.addEventListener("DOMContentLoaded", async () => {
 async function callAllPokemons() {
     try {
         const cachedData = localStorage.getItem("data");
-        if (cachedData) {
+        if (!cachedData) {
             collection = JSON.parse(cachedData);
             MY_FUNCTIONS.displayPokemons(collection);
             displayPokemonList(collection);
-            displayPokemonDetails(collection[0]);
-            insertComparePokemon(collection[2]);
-            insertComparePokemon(collection[5]);
-            displayEvolutionLine(collection[5].species.evolution);
-            console.log(collection[0])
+            
+            // Only display details if collection has items
+            if (collection.length > 0) {
+                displayPokemonDetails(collection[0]);
+                insertComparePokemon(collection[2]);
+                insertComparePokemon(collection[5]);
+                displayEvolutionLine(collection[5].species.evolution);
+            }
             return;
         }
 
@@ -207,7 +210,7 @@ async function callAllPokemons() {
         const batchSize = 20;
         let allPokemons = [];
 
-        for (let i = 0; i < allPokemons.length; i += batchSize) {
+        for (let i = 0; i < allPokemonUrls.length; i += batchSize) {
             const batchUrls = allPokemonUrls.slice(i, i + batchSize);
             const results = await Promise.all(batchUrls.map(fetchPokemon));
             const filtered = results.filter(p => p !== null);
@@ -218,9 +221,12 @@ async function callAllPokemons() {
 
         collection = allPokemons;
         localStorage.setItem("data", JSON.stringify(collection));
-        displayPokemonDetails(collection[0]);
-        insertComparePokemon(collection[2]);
-        insertComparePokemon(collection[5]);
+        
+        if (collection.length > 0) {
+            displayPokemonDetails(collection[0]);
+            insertComparePokemon(collection[2]);
+            insertComparePokemon(collection[5]);
+        }
 
         console.log("All Pokémon loaded and saved");
     } catch (error) {
