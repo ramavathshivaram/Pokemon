@@ -29,8 +29,8 @@ function displayComparePokemon(pokemon) {
     )?.color || "#ccc";
 
     const types = pokemon.types;
-    const weaknessesHTML = pokemon.weaknesses.map(type => `<img src="./assets/${type}.png">`).join('');
-    const resistancesHTML = pokemon.resistances.map(type => `<img src="./assets/${type}.png">`).join('');
+    const weaknessesHTML = pokemon.weaknesses.map(type => `<img src="./assets/types/${type}.png">`).join('');
+    const resistancesHTML = pokemon.resistances.map(type => `<img src="./assets/types/${type}.png">`).join('');
     return `
             <div class="pokemonDetails">
                 <p id="id"># ${pokemon.id}</p>
@@ -91,10 +91,10 @@ async function displayPokemonDetails(pokemon) {
 
         let icons = createIcons(pokemon);
         const weaknessesHTML = pokemon.weaknesses.map(type =>
-            `<img src="./assets/${type}.png" alt="${type}">`
+            `<img src="./assets/types/${type}.png" alt="${type}">`
         ).join('');
         const resistancesHTML = pokemon.resistances.map(type =>
-            `<img src="./assets/${type}.png" alt="${type}">`
+            `<img src="./assets/types/${type}.png" alt="${type}">`
         ).join('');
 
         mainContainer.innerHTML = `

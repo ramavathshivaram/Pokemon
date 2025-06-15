@@ -27,7 +27,8 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    overflow: hidden;
+    overflow: scroll;
+    scrollbar-width: none; 
 }
 
 #aboutContainer form {

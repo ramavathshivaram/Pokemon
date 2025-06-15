@@ -239,9 +239,16 @@ export function createIcons(pokemon) {
 
     const iconsHTML = pokemon.types
         .filter(type => type && typeof type === 'string')
-        .map(type =>
-            `<img src="./assets/types/${type.toLowerCase()}.png" alt="${type}" class="type-icon" data-type="${type}">`
-        ).join('');
+        .map(type => {
+            const typeObj = pokemonTypes.find(t => t.name.toLowerCase() === type.toLowerCase());
+            const color = typeObj ? typeObj.color : "#333";
+            return `<span 
+                        class="type-icon" 
+                        data-type="${type}" 
+                        style="color:${color};">
+                        ${type.charAt(0).toUpperCase() + type.slice(1)}
+                    </span>`;
+        }).join('');
 
     icons.innerHTML = iconsHTML;
 

@@ -210,3 +210,5 @@ on("gameAsideToggle", "click", () => {
 });
 on("quiz", "click", () => gameTemplates.show("quizGame"));
 on("cardShufle", "click", () => gameTemplates.show("matchTheType"));
+on("snakeGame", "click", () => gameTemplates.show("snakeGame"));
+on("mazeGame", "click", () => gameTemplates.show("mazeGame"));
