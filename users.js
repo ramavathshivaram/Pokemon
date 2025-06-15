@@ -10,7 +10,7 @@ class NEWUSER {
         this.typeMatchScore = 0;
         this.gameHistory = [];
         this.isEmailVerified = false;
-        this.avatar = 'default.png';
+        this.avatar = './assets/avatar/default.png';
         this.securityQuestions = [];
         this.loginHistory = [];
         this.preferences = {
@@ -20,6 +20,7 @@ class NEWUSER {
         };
         this.lastLogin = new Date().toISOString();
     }
+
 
     updateScore(gameType, newScore) {
         switch (gameType) {
@@ -74,8 +75,9 @@ class NEWUSER {
         this.saveToLocalStorage();
     }
 
-    setSecurityQuestions(questions) {
+    setSecurityQuestions(questions, answer) {
         this.securityQuestions = questions;
+        this.answer=answer;
         this.saveToLocalStorage();
     }
 

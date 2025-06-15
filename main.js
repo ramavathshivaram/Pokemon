@@ -25,6 +25,12 @@ import {
 export let collection = [];
 export let currentPokemon = 0;
 
+// --- Utility: Add Event Listener If Element Exists ---
+const on = (id, event, fn) => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener(event, fn);
+};
+
 // --- General Event Mappings ---
 const eventMappings = [
     { id: "search", func: MY_FUNCTIONS.displaySearch },
@@ -87,12 +93,7 @@ const eventMappings = [
     }
 ];
 
-eventMappings.forEach(({ id, func, event = "click" }) => {
-    const element = document.getElementById(id);
-    if (element) {
-        element.addEventListener(event, func);
-    }
-});
+eventMappings.forEach(({ id, func, event = "click" }) => on(id, event, func));
 
 // --- Toggle Container Logic ---
 const toggleMappings = [
@@ -118,64 +119,37 @@ toggleMappings.forEach(({ triggerId, targetId, extraFunc }) => {
 
 // --- Dark Mode Toggle ---
 document.body.classList.toggle("dark-mode");
-const mode = document.getElementById("mode");
-if (mode) {
-    mode.addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode");
-    });
-}
+on("mode", "click", () => document.body.classList.toggle("dark-mode"));
 
 // --- Aside Menu Toggle ---
-const asideMenu = document.getElementById("asideMenuContainer");
-if (asideMenu) {
-    asideMenu.addEventListener("click", () => {
-        asideMenu.classList.toggle("active");
-        const searchWrapper = document.getElementById("searchWrapper");
-        if (searchWrapper) searchWrapper.classList.toggle("expanded");
-    });
-}
+on("asideMenuContainer", "click", () => {
+    const asideMenu = document.getElementById("asideMenuContainer");
+    asideMenu.classList.toggle("active");
+    document.getElementById("searchWrapper")?.classList.toggle("expanded");
+});
 
 // --- Previous/Next Pokémon Navigation ---
-const previousPokemon = document.getElementById("previous");
-const nextPokemon = document.getElementById("next");
+const updatePokemon = dir => {
+    let idx = JSON.parse(localStorage.getItem("currentPokemon")) ?? 0;
+    idx += dir;
+    if (idx >= 0 && idx < collection.length) {
+        currentPokemon = idx;
+        displayPokemonDetails(collection[currentPokemon]);
+        localStorage.setItem("currentPokemon", JSON.stringify(currentPokemon));
+    }
+};
+on("previous", "click", () => updatePokemon(-1));
+on("next", "click", () => updatePokemon(1));
 
-if (previousPokemon) {
-    previousPokemon.addEventListener("click", () => {
-        if (currentPokemon > 0) {
-            currentPokemon = JSON.parse(localStorage.getItem("currentPokemon"));
-            currentPokemon--;
-            displayPokemonDetails(collection[currentPokemon]);
-            localStorage.setItem("currentPokemon", JSON.stringify(currentPokemon));
-        }
-    });
-}
-
-if (nextPokemon) {
-    nextPokemon.addEventListener("click", () => {
-        if (currentPokemon < collection.length - 1) {
-            currentPokemon = JSON.parse(localStorage.getItem("currentPokemon"));
-            currentPokemon++;
-            displayPokemonDetails(collection[currentPokemon]);
-            localStorage.setItem("currentPokemon", JSON.stringify(currentPokemon));
-        }
-    });
-}
-
-// ----------------------STATS EVENTS---------------------------------
-const statButtons = [
+// --- Stats Buttons ---
+[
     { id: "hpBtn", stat: "hp" },
     { id: "attackBtn", stat: "attack" },
     { id: "defenseBtn", stat: "defense" },
     { id: "specialAttackBtn", stat: "special-attack" },
     { id: "specialDefenseBtn", stat: "special-defense" },
     { id: "speedBtn", stat: "speed" }
-];
-
-statButtons.forEach(({ id, stat }) => {
-    document.getElementById(id).addEventListener("click", () => {
-        MY_FUNCTIONS.displayStat(stat);
-    });
-});
+].forEach(({ id, stat }) => on(id, "click", () => MY_FUNCTIONS.displayStat(stat)));
 
 // --- Initial Load ---
 window.addEventListener("DOMContentLoaded", async () => {
@@ -188,12 +162,10 @@ window.addEventListener("DOMContentLoaded", async () => {
 async function callAllPokemons() {
     try {
         const cachedData = localStorage.getItem("data");
-        if (!cachedData) {
+        if (cachedData) {
             collection = JSON.parse(cachedData);
             MY_FUNCTIONS.displayPokemons(collection);
             displayPokemonList(collection);
-            
-            // Only display details if collection has items
             if (collection.length > 0) {
                 displayPokemonDetails(collection[0]);
                 insertComparePokemon(collection[2]);
@@ -213,7 +185,7 @@ async function callAllPokemons() {
         for (let i = 0; i < allPokemonUrls.length; i += batchSize) {
             const batchUrls = allPokemonUrls.slice(i, i + batchSize);
             const results = await Promise.all(batchUrls.map(fetchPokemon));
-            const filtered = results.filter(p => p !== null);
+            const filtered = results.filter(Boolean);
             allPokemons.push(...filtered);
             MY_FUNCTIONS.displayPokemons(filtered);
             displayPokemonList(filtered);
@@ -221,13 +193,11 @@ async function callAllPokemons() {
 
         collection = allPokemons;
         localStorage.setItem("data", JSON.stringify(collection));
-        
         if (collection.length > 0) {
             displayPokemonDetails(collection[0]);
             insertComparePokemon(collection[2]);
             insertComparePokemon(collection[5]);
         }
-
         console.log("All Pokémon loaded and saved");
     } catch (error) {
         console.error("Error loading Pokémon:", error);
@@ -235,17 +205,8 @@ async function callAllPokemons() {
 }
 
 // --- Game Events ---
-const gameAsideToggle = document.getElementById("gameAsideToggle");
-if (gameAsideToggle) {
-    gameAsideToggle.addEventListener("click", () => {
-        document.getElementById("gameAside")?.classList.toggle("active");
-    });
-}
-
-document.getElementById("quiz")?.addEventListener("click", () => {
-    gameTemplates.show("quizGame");
+on("gameAsideToggle", "click", () => {
+    document.getElementById("gameAside")?.classList.toggle("active");
 });
-
-document.getElementById("cardShufle")?.addEventListener("click", () => {
-    gameTemplates.show("matchTheType");
-});
+on("quiz", "click", () => gameTemplates.show("quizGame"));
+on("cardShufle", "click", () => gameTemplates.show("matchTheType"));

@@ -290,23 +290,23 @@ export function displayArceusForms() {
     removeUlHeight();
 
     let arceusFormsData = [
-        { type: "bug", sprite: "./sprites/493-bug.png" },
-        { type: "dark", sprite: "./sprites/493-dark.png" },
-        { type: "dragon", sprite: "./sprites/493-dragon.png" },
-        { type: "electric", sprite: "./sprites/493-electric.png" },
-        { type: "fairy", sprite: "./sprites/493-fairy.png" },
-        { type: "fighting", sprite: "./sprites/493-fighting.png" },
-        { type: "ghost", sprite: "./sprites/493-ghost.png" },
-        { type: "grass", sprite: "./sprites/493-grass.png" },
-        { type: "ground", sprite: "./sprites/493-ground.png" },
-        { type: "ice", sprite: "./sprites/493-ice.png" },
-        { type: "poison", sprite: "./sprites/493-poison.png" },
-        { type: "psychic", sprite: "./sprites/493-psychic.png" },
-        { type: "rock", sprite: "./sprites/493-rock.png" },
-        { type: "steel", sprite: "./sprites/493-steel.png" },
-        { type: "unknown", sprite: "./sprites/493-unknown.png" }, // Fixed typo
-        { type: "water", sprite: "./sprites/493-water.png" },
-        { type: "normal", sprite: "./sprites/493.png" }, // Base form
+        { type: "bug", sprite: "./assets/sprites/493-bug.png" },
+        { type: "dark", sprite: "./assets/sprites/493-dark.png" },
+        { type: "dragon", sprite: "./assets/sprites/493-dragon.png" },
+        { type: "electric", sprite: "./assets/sprites/493-electric.png" },
+        { type: "fairy", sprite: "./assets/sprites/493-fairy.png" },
+        { type: "fighting", sprite: "./assets/sprites/493-fighting.png" },
+        { type: "ghost", sprite: "./assets/sprites/493-ghost.png" },
+        { type: "grass", sprite: "./assets/sprites/493-grass.png" },
+        { type: "ground", sprite: "./assets/sprites/493-ground.png" },
+        { type: "ice", sprite: "./assets/sprites/493-ice.png" },
+        { type: "poison", sprite: "./assets/sprites/493-poison.png" },
+        { type: "psychic", sprite: "./assets/sprites/493-psychic.png" },
+        { type: "rock", sprite: "./assets/sprites/493-rock.png" },
+        { type: "steel", sprite: "./assets/sprites/493-steel.png" },
+        { type: "unknown", sprite: "./assets/sprites/493-unknown.png" }, // Fixed typo
+        { type: "water", sprite: "./assets/sprites/493-water.png" },
+        { type: "normal", sprite: "./assets/sprites/493.png" }, // Base form
     ];
 
     let arceusPokemon = collection[492]; // Arceus base data
@@ -362,13 +362,18 @@ export function searchInputPokemon() {
 let randomInterval;
 
 export function removeUlHeight() {
-    document.getElementById("searchPokemon").classList.remove("expanded");
-    document.getElementById("sortedPokemon").classList.remove("expanded");
-    document.getElementById("powerInType").classList.remove("expanded");
-    document.getElementById("movesContainer").classList.remove("expanded");
-    document.getElementById("abilitiesContainer").classList.remove("expanded");
-    document.getElementById("evolutionList").classList.remove("expanded");
-    document.getElementById("basicStatsContainer").classList.remove("expanded");
+    [
+        "searchPokemon",
+        "sortedPokemon",
+        "powerInType",
+        "movesContainer",
+        "abilitiesContainer",
+        "evolutionList",
+        "basicStatsContainer"
+    ].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove("expanded");
+    });
     if (randomInterval) {
         clearInterval(randomInterval);
         randomInterval = null;
@@ -492,21 +497,18 @@ function displayHidden() {
 
 export function displaySearch() {
     displayHidden();
-    search.style.scale = "1.3";
     searchContainer.style.display = "flex";
     search.classList.add("active");
 }
 
 export function displayPokemonContainer() {
     displayHidden();
-    pokemonDetails.style.scale = "1.3";
     pokemonDetailsContainer.style.display = "flex";
     pokemonDetails.classList.add("active");
 }
 
 export function displayCompare() {
     displayHidden();
-    compare.style.scale = "1.3";
     comparePokemonContainer.style.display = "grid";
     compare.classList.add("active");
 }
@@ -517,13 +519,11 @@ export function displayEvolution() {
 
 export function displayAbout() {
     displayHidden();
-    about.style.scale = "1.3";
     aboutContainer.style.display = "block";
     about.classList.add("active");
 }
 export function displayGame() {
     displayHidden();
-    game.style.scale = "1.3";
     gameContainer.style.display = "flex";
     game.classList.add("active");
     gameTemplates.show('guesTheGame');
@@ -538,36 +538,21 @@ export function displayLoader() {
     }, 3000);
 }
 
-
-
-
-
 export function checkUser() {
-
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     let users = JSON.parse(localStorage.getItem('pokemonUsers')) || [];
-    const userExists = users.some(user => user.username === username && user.password === password);
+    const user = users.find(u => u.username === username && u.password === password);
 
-    let currentuser = users.filter((e) => username == e.username)
-    console.log(currentuser[0])
-    if (userExists) {
+    if (user) {
         // Update UI to show logged in state
-        currentUserLogin(currentuser[0]);
+        currentUserLogin(user);
         document.getElementById("logout").addEventListener("click", logoutUser);
         return true;
     } else {
         alert('Invalid credentials');
         return false;
     }
-}
-
-export function logoutUser() {
-    aboutContainer.innerHTML = displayUers.login;
-    document.getElementById("loginSubmit").addEventListener("click", checkUser);
-    document.getElementById("loginToRegister").addEventListener("click", () => {
-        aboutContainer.innerHTML = displayUers.register;
-    });
 }
 
 export function newUser() {
@@ -604,21 +589,6 @@ export function saveUsers(users) {
     localStorage.setItem('pokemonUsers', JSON.stringify(users));
 }
 
-export function currentUserLogin(currentUser) {
-    const container = document.getElementById("aboutContainer");
-    container.innerHTML = ` <div>
-                                <div class="welcome">
-                                    <h3>Welcome, ${currentUser.username}!</h3>
-                                    <button id="logout">Logout</button>
-                                </div>
-                                <hr>
-                                <div>
-
-                                </div>
-                            </div>`
-}
-
-
 export function displayTypeInfo(type) {
     const container = document.createElement("div");
     container.className = "type-card";
@@ -653,4 +623,290 @@ export function displayTypeInfo(type) {
     document.querySelector("#closeTypeDetails").addEventListener("click", () => {
         typeInfoContainer.classList.remove("active");
     })
+}
+
+
+export function logoutUser() {
+    // Clear any user session data if needed
+    aboutContainer.innerHTML = displayUers.login;
+    document.getElementById("loginSubmit").addEventListener("click", (e) => {
+        e.preventDefault();
+        checkUser();
+    });
+    document.getElementById("loginToRegister").addEventListener("click", () => {
+        aboutContainer.innerHTML = displayUers.register;
+    });
+}
+
+
+export function currentUserLogin(currentUser) {
+    if (!currentUser) {
+        console.error("No current user provided");
+        return;
+    }
+
+    const container = document.getElementById("aboutContainer");
+    if (!container) {
+        console.error("About container not found");
+        return;
+    }
+
+    // Ensure we have safe defaults for all properties
+    const safeUser = {
+        username: currentUser.username || "Unknown",
+        email: currentUser.email || "No email",
+        score: currentUser.score || 0,
+        favaratePokeom: currentUser.favaratePokeom || [],
+        gameHistory: currentUser.gameHistory || [],
+        isEmailVerified: currentUser.isEmailVerified || false,
+        avatar: currentUser.avatar || './assets/avatar/default.png',
+        securityQuestions: currentUser.securityQuestions || [],
+        loginHistory: currentUser.loginHistory || [],
+        preferences: currentUser.preferences || {
+            theme: 'light',
+            notifications: true,
+            language: 'en'
+        },
+        lastLogin: currentUser.lastLogin || new Date().toISOString(),
+        quizScore: currentUser.quizScore || 0,
+        typeMatchScore: currentUser.typeMatchScore || 0
+    };
+
+    if (safeUser.preferences.theme === "light") {
+        document.body.classList.remove("dark-mode");
+    }
+    else {
+        document.body.classList.add("dark-mode");
+    }
+
+    // Format last login date
+    const lastLoginDate = new Date(safeUser.lastLogin);
+    const formattedLastLogin = lastLoginDate.toLocaleString();
+
+    // Format game history
+    const gameHistoryHTML = safeUser.gameHistory.length > 0
+        ? safeUser.gameHistory.map(game => `
+            <li>
+                <strong>${game.gameType || 'Unknown'}</strong>: ${game.score || 0} points
+                <small>(${game.date ? new Date(game.date).toLocaleDateString() : 'Unknown date'})</small>
+            </li>
+        `).join('')
+        : '<li>No games played yet</li>';
+
+    // Format favorite Pokémon
+    const favoritesHTML = safeUser.favaratePokeom.length > 0
+        ? safeUser.favaratePokeom.map(pokemon => `
+            <li class="favorite-pokemon" data-id="${pokemon.id || ''}">
+                ${pokemon.name || 'Unknown'}
+                <button class="remove-favorite" data-id="${pokemon.id || ''}">×</button>
+            </li>
+        `).join('')
+        : '<li>No favorites yet</li>';
+
+    // Format login history
+    const loginHistoryHTML = safeUser.loginHistory.length > 0
+        ? safeUser.loginHistory
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .slice(0, 5)
+            .map(login => `
+                <li>
+                    ${login.date ? new Date(login.date).toLocaleString() : 'Unknown date'} - 
+                    ${login.device || 'Unknown device'} (${login.browser || 'Unknown browser'})
+                </li>
+            `).join('')
+        : '<li>No login history</li>';
+
+    // Format security questions
+    const securityQuestionsHTML = safeUser.securityQuestions.length > 0
+        ? safeUser.securityQuestions.map((q, i) => `
+            <li>
+                <strong>Q${i + 1}:</strong> ${q.question || 'No question set'}
+            </li>
+        `).join('')
+        : '<li>No security questions set</li>';
+
+    container.innerHTML = `
+        <div class="user-profile">
+            <div class="profile-header">
+                <div class="avatar-container">
+                    <img src="${safeUser.avatar}" alt="Avatar" class="avatar" id="userAvatar">
+                    <button id="changeAvatar">Change Avatar</button>
+                </div>
+                <div class="user-info">
+                    <h2>${safeUser.username}</h2>
+                    <p>Member since: ${new Date().toLocaleDateString()}</p>
+                    <p>Last login: ${formattedLastLogin}</p>
+                    <p>Email: ${safeUser.email} 
+                        ${safeUser.isEmailVerified
+            ? '<span class="verified">✓ Verified</span>'
+            : '<span class="unverified">✗ Unverified</span>'}
+                    </p>
+                    <p>Total Score: ${safeUser.score}</p>
+                </div>
+            </div>
+            
+            <div class="profile-sections">
+                <section class="profile-section">
+                    <h3><i class="fas fa-star"></i> Favorite Pokémon</h3>
+                    <ul class="favorites-list" id="favoritesList">
+                        ${favoritesHTML}
+                    </ul>
+                    <button id="addFavorite">Add Favorite</button>
+                </section>
+                
+                <section class="profile-section">
+                    <h3><i class="fas fa-gamepad"></i> Game History</h3>
+                    <ul class="game-history">
+                        ${gameHistoryHTML}
+                    </ul>
+                    <div class="game-scores">
+                        <p>Quiz High Score: ${safeUser.quizScore}</p>
+                        <p>Type Match High Score: ${safeUser.typeMatchScore}</p>
+                    </div>
+                </section>
+                
+                <section class="profile-section">
+                    <h3><i class="fas fa-shield-alt"></i> Security</h3>
+                    <div class="security-questions">
+                        <h4>Security Questions</h4>
+                        <ul>${securityQuestionsHTML}</ul>
+                        <button id="manageSecurity">Manage Security</button>
+                    </div>
+                    <div class="login-history">
+                        <h4>Recent Logins</h4>
+                        <ul>${loginHistoryHTML}</ul>
+                    </div>
+                </section>
+                
+                <section class="profile-section">
+                    <h3><i class="fas fa-cog"></i> Preferences</h3>
+                    <div class="preferences">
+                        <p><strong>Theme:</strong> ${safeUser.preferences.theme}</p>
+                        <p><strong>Notifications:</strong> ${safeUser.preferences.notifications ? 'On' : 'Off'}</p>
+                        <p><strong>Language:</strong> ${safeUser.preferences.language.toUpperCase()}</p>
+                        <button id="editPreferences">Edit Preferences</button>
+                    </div>
+                </section>
+            </div>
+            
+            <div class="profile-actions">
+                <button id="logout">Logout</button>
+                <button id="deleteAccount">Delete Account</button>
+            </div>
+        </div>
+    `;
+
+
+    document.getElementById("logout")?.addEventListener("click", logoutUser);
+
+    document.getElementById("addFavorite")?.addEventListener("click", () => {
+        showAddFavoriteModal(safeUser, container);
+    });
+
+
+    document.querySelectorAll(".remove-favorite").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            const pokemonId = parseInt(e.target.dataset.id, 10);
+
+            safeUser.favaratePokeom = safeUser.favaratePokeom.filter(fav => fav.id !== pokemonId);
+
+            saveUsers(users.map(u => u.username === safeUser.username ? { ...u, favaratePokeom: safeUser.favaratePokeom } : u));
+
+            currentUserLogin(safeUser);
+        });
+    });
+
+    // Add change avatar functionality
+    document.getElementById("changeAvatar")?.addEventListener("click", () => {
+        // Create a file input dynamically
+        const fileInput = document.createElement("input");
+        fileInput.type = "file";
+        fileInput.accept = "image/*";
+        fileInput.style.display = "none";
+        document.body.appendChild(fileInput);
+
+        fileInput.addEventListener("change", (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                // Save the image as a data URL in the user's avatar
+                safeUser.avatar = e.target.result;
+                saveUsers(users.map(u => u.username === safeUser.username ? { ...u, avatar: safeUser.avatar } : u));
+                currentUserLogin(safeUser);
+            };
+            reader.readAsDataURL(file);
+        });
+
+        fileInput.click();
+        // Remove the input after use
+        fileInput.addEventListener("blur", () => fileInput.remove());
+    });
+
+    // Add security management functionality
+    document.getElementById("manageSecurity")?.addEventListener("click", () => {
+        const question = prompt("Enter a security question:");
+        if (!question) return;
+        const answer = prompt("Enter the answer to your security question:");
+        if (!answer) return;
+
+        // Add to user's security questions
+        safeUser.securityQuestions.push({ question, answer });
+        saveUsers(users.map(u => u.username === safeUser.username ? { ...u, securityQuestions: safeUser.securityQuestions } : u));
+        currentUserLogin(safeUser);
+        alert("Security question saved!");
+    });
+
+    // Add preferences edit functionality
+    document.getElementById("editPreferences")?.addEventListener("click", () => {
+        // Toggle theme between 'light' and 'dark'
+        safeUser.preferences.theme = safeUser.preferences.theme === "light" ? "dark" : "light";
+        // Update body class for dark mode
+        if (safeUser.preferences.theme === "dark") {
+            document.body.classList.add("dark-mode");
+        } else {
+            document.body.classList.remove("dark-mode");
+        }
+        // Save updated preferences
+        saveUsers(users.map(u => u.username === safeUser.username ? { ...u, preferences: safeUser.preferences } : u));
+        // Refresh profile UI
+        currentUserLogin(safeUser);
+    });
+
+    // Add delete account functionality
+    document.getElementById("deleteAccount")?.addEventListener("click", () => {
+        if (confirm("Are you sure you want to delete your account? This cannot be undone.")) {
+            alert("Account deletion feature coming soon!");
+        }
+    });
+}
+
+function showAddFavoriteModal(safeUser, container) {
+    let addFavoriteModal = document.createElement("div");
+    addFavoriteModal.classList.add("addFavoriteModal");
+    addFavoriteModal.innerHTML = `<h3>Add Pokémon to Favorites</h3><hr><ul class="favorite-list"></ul><button id="closeAddFavorite">X</button>`;
+
+    let ul = addFavoriteModal.querySelector(".favorite-list");
+    collection.forEach((pokemon) => {
+        let li = document.createElement("li");
+        li.textContent = pokemon.name;
+        li.addEventListener("click", () => {
+            if (!safeUser.favaratePokeom.some(fav => fav.id === pokemon.id)) {
+                safeUser.favaratePokeom.push({ id: pokemon.id, name: pokemon.name });
+                saveUsers(users.map(u => u.username === safeUser.username ? { ...u, favaratePokeom: safeUser.favaratePokeom } : u));
+                currentUserLogin(safeUser);
+            } else {
+                alert("Already in favorites!");
+            }
+        });
+        ul.appendChild(li);
+    });
+
+    // Close button
+    addFavoriteModal.querySelector("#closeAddFavorite").addEventListener("click", () => {
+        addFavoriteModal.remove();
+    });
+
+    container.appendChild(addFavoriteModal);
 }
