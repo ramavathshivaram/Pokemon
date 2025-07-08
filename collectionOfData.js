@@ -469,6 +469,7 @@ function displayEvolutionLine(pokemonEvolutionChain) {
     traverseChain(pokemonEvolutionChain);
 }
 
+// In collectionOfData.js, update the displayUers object:
 export const displayUers = {
     login: `  
         <form id="loginForm">
@@ -509,27 +510,60 @@ export const displayUers = {
         const container = document.getElementById("aboutContainer");
         container.innerHTML = this[type];
 
-        // Add event listeners AFTER rendering
         if (type === "login") {
-            document.getElementById("loginSubmit").addEventListener("click", (e) => {
+            document.getElementById("loginForm").addEventListener("submit", (e) => {
                 e.preventDefault();
-                MY_FUNCTIONS.checkUser()
-
+                const username = document.getElementById("username").value;
+                const password = document.getElementById("password").value;
+                MY_FUNCTIONS.handleLogin(username, password);
             });
 
             document.getElementById("loginToRegister").addEventListener("click", () => {
                 this.show("register");
             });
-        } else if (type === "register") {
-            document.getElementById("registerSubmit").addEventListener("click", (e) => {
+
+            document.querySelector(".forgotpasswd").addEventListener("click", (e) => {
                 e.preventDefault();
-                MY_FUNCTIONS.newUser();
+                this.showForgotPassword();
+            });
+        } else if (type === "register") {
+            document.getElementById("registerForm").addEventListener("submit", (e) => {
+                e.preventDefault();
+                const newUsername = document.getElementById("newUsername").value;
+                const newPassword = document.getElementById("newPassword").value;
+                const confirmPassword = document.getElementById("confirmPassword").value;
+                const email = document.getElementById("newMail").value;
+                MY_FUNCTIONS.handleRegister(newUsername, newPassword, confirmPassword, email);
             });
 
             document.getElementById("registerLogin").addEventListener("click", () => {
                 this.show("login");
             });
         }
+    },
+
+    showForgotPassword: function() {
+        const container = document.getElementById("aboutContainer");
+        container.innerHTML = `
+            <form id="forgotPasswordForm">
+                <h3>Reset Password</h3>
+                <label for="resetEmail">Email</label>
+                <input type="email" id="resetEmail" placeholder="Enter your email" required>
+                
+                <button type="submit">Reset Password</button>
+                <button type="button" id="backToLogin">Back to Login</button>
+            </form>
+        `;
+        
+        document.getElementById("forgotPasswordForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const email = document.getElementById("resetEmail").value;
+            MY_FUNCTIONS.handleForgotPassword(email);
+        });
+        
+        document.getElementById("backToLogin").addEventListener("click", () => {
+            this.show("login");
+        });
     }
 };
 

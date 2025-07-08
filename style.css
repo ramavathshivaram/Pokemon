@@ -213,6 +213,7 @@ body {
     z-index: 1000;
     border-bottom: 1px solid var(--primary-gradient);
     transition: all var(--transition-normal);
+    border-bottom: 1px solid blue;
 
     h3 {
         font-size: clamp(0.1rem, 2vw, 1.5rem);
@@ -475,6 +476,10 @@ body {
                 height: 100%;
             }
 
+        }
+        #pokemonCount span{
+            font-size: 1.5rem;
+            font-weight: 700;
         }
 
         .search {

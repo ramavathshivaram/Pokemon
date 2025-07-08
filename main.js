@@ -155,18 +155,25 @@ on("next", "click", () => updatePokemon(1));
 window.addEventListener("DOMContentLoaded", async () => {
     MY_FUNCTIONS.displaySearch();
     await callAllPokemons();
-    displayUers.show('login');
+
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (currentUser) {
+        MY_FUNCTIONS.currentUserLogin(currentUser);
+    } else {
+        displayUers.show("login");
+    }
 });
 
 // --- Fetch and Display All Pokémon ---
 async function callAllPokemons() {
     try {
         const cachedData = localStorage.getItem("data");
-        if (cachedData > 1301) {
+        if (cachedData >= 1301) {
             collection = JSON.parse(cachedData);
             MY_FUNCTIONS.displayPokemons(collection);
             displayPokemonList(collection);
             if (collection.length > 0) {
+                MY_FUNCTIONS.pokemonCountDisplay(collection.length);
                 displayPokemonDetails(collection[0]);
                 insertComparePokemon(collection[2]);
                 insertComparePokemon(collection[5]);
@@ -186,7 +193,9 @@ async function callAllPokemons() {
             const batchUrls = allPokemonUrls.slice(i, i + batchSize);
             const results = await Promise.all(batchUrls.map(fetchPokemon));
             const filtered = results.filter(Boolean);
+            MY_FUNCTIONS.displayPokemons(filtered);
             allPokemons.push(...filtered);
+            MY_FUNCTIONS.pokemonCountDisplay(allPokemons.length);
             MY_FUNCTIONS.displayPokemons(filtered);
             displayPokemonList(filtered);
         }

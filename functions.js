@@ -626,19 +626,6 @@ export function displayTypeInfo(type) {
 }
 
 
-export function logoutUser() {
-    // Clear any user session data if needed
-    aboutContainer.innerHTML = displayUers.login;
-    document.getElementById("loginSubmit").addEventListener("click", (e) => {
-        e.preventDefault();
-        checkUser();
-    });
-    document.getElementById("loginToRegister").addEventListener("click", () => {
-        aboutContainer.innerHTML = displayUers.register;
-    });
-}
-
-
 export function currentUserLogin(currentUser) {
     if (!currentUser) {
         console.error("No current user provided");
@@ -909,4 +896,80 @@ function showAddFavoriteModal(safeUser, container) {
     });
 
     container.appendChild(addFavoriteModal);
+}
+
+
+// In functions.js, add these functions:
+
+export function handleLogin(username, password) {
+    const users = JSON.parse(localStorage.getItem('pokemonUsers')) || [];
+    const user = users.find(u => u.username === username && u.password === password);
+    
+    if (user) {
+        // Update last login
+        user.lastLogin = new Date().toISOString();
+        localStorage.setItem('pokemonUsers', JSON.stringify(users));
+        
+        // Store current user in localStorage
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        
+        // Update UI
+        currentUserLogin(user);
+        return true;
+    } else {
+        alert('Invalid username or password');
+        return false;
+    }
+}
+
+export function handleRegister(username, password, confirmPassword, email) {
+    if (password !== confirmPassword) {
+        alert("Passwords don't match!");
+        return false;
+    }
+    
+    const users = JSON.parse(localStorage.getItem('pokemonUsers')) || [];
+    
+    if (users.some(u => u.username === username)) {
+        alert("Username already exists");
+        return false;
+    }
+    
+    if (users.some(u => u.email === email)) {
+        alert("Email already registered");
+        return false;
+    }
+    
+    const newUser = new NEWUSER(username, password, email, users.length + 1);
+    users.push(newUser);
+    localStorage.setItem('pokemonUsers', JSON.stringify(users));
+    
+    alert("Registration successful! Please login.");
+    displayUers.show("login");
+    return true;
+}
+
+export function handleForgotPassword(email) {
+    const users = JSON.parse(localStorage.getItem('pokemonUsers')) || [];
+    const user = users.find(u => u.email === email);
+    
+    if (user) {
+        // In a real app, you would send a password reset email
+        alert(`Password reset link sent to ${email} (simulated)`);
+        displayUers.show("login");
+    } else {
+        alert("No account found with that email");
+    }
+}
+
+// Update the currentUserLogin function to handle logout
+export function logoutUser() {
+    localStorage.removeItem('currentUser');
+    displayUers.show("login");
+    document.body.classList.remove("dark-mode");
+}
+
+
+export function pokemonCountDisplay(count) {
+    document.getElementById("pokemonCount").innerHTML=`Pokemons: <span>${count}</span>`
 }
