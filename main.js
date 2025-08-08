@@ -193,11 +193,10 @@ async function callAllPokemons() {
             const batchUrls = allPokemonUrls.slice(i, i + batchSize);
             const results = await Promise.all(batchUrls.map(fetchPokemon));
             const filtered = results.filter(Boolean);
-            MY_FUNCTIONS.displayPokemons(filtered);
             allPokemons.push(...filtered);
             MY_FUNCTIONS.pokemonCountDisplay(allPokemons.length);
-            MY_FUNCTIONS.displayPokemons(filtered);
-            displayPokemonList(filtered);
+            MY_FUNCTIONS.displayPokemons(allPokemons);
+            displayPokemonList(allPokemons);
         }
 
         collection = allPokemons;
