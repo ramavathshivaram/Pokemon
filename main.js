@@ -6,6 +6,8 @@ import {
     evolutionLines,
 } from './collectionOfData.js';
 
+import {POKEMON_COLLECTION_DATA } from './const.js'
+
 import {
     displayPokemonList,
     displayPokemonDetails,
@@ -167,6 +169,21 @@ window.addEventListener("DOMContentLoaded", async () => {
 // --- Fetch and Display All Pokémon ---
 async function callAllPokemons() {
     try {
+        
+        if(POKEMON_COLLECTION_DATA.length > 0) {
+            collection = POKEMON_COLLECTION_DATA;
+            MY_FUNCTIONS.displayPokemons(collection);
+            displayPokemonList(collection);
+            if (collection.length > 0) {
+                MY_FUNCTIONS.pokemonCountDisplay(collection.length);
+                displayPokemonDetails(collection[0]);
+                insertComparePokemon(collection[2]);
+                insertComparePokemon(collection[5]);
+                displayEvolutionLine(collection[5].species.evolution);
+            }
+            return;
+        }
+
         const cachedData = localStorage.getItem("data");
         if (cachedData >= 1301) {
             collection = JSON.parse(cachedData);
