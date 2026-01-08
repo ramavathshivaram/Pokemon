@@ -300,6 +300,8 @@ async function displayMoves(pokemon) {
     });
 
     const modal = document.getElementById('moveModal');
+    // close the modal first time
+    modal.style.display = 'none';
     const closeBtn = document.querySelector('.close-modal');
 
     closeBtn.addEventListener('click', () => {
@@ -367,6 +369,9 @@ function displayAbilities(pokemon) {
         abilityList.appendChild(btn);
         btn.addEventListener("click", () => showAbilitieDetails(ability));
     });
+
+    // first time modal is false
+    document.getElementById('moveModal').style.display = 'none';
 
     document.getElementById("backbtn").addEventListener("click", () => {
         displayPokemonDetails(pokemon);

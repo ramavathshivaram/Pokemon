@@ -169,7 +169,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 // --- Fetch and Display All Pokémon ---
 async function callAllPokemons() {
     try {
-        
+
         if(POKEMON_COLLECTION_DATA.length > 0) {
             collection = POKEMON_COLLECTION_DATA;
             MY_FUNCTIONS.displayPokemons(collection);
@@ -185,7 +185,7 @@ async function callAllPokemons() {
         }
 
         const cachedData = localStorage.getItem("data");
-        if (cachedData >= 1301) {
+        if (cachedData >= 1350) {
             collection = JSON.parse(cachedData);
             MY_FUNCTIONS.displayPokemons(collection);
             displayPokemonList(collection);
