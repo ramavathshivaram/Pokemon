@@ -204,7 +204,7 @@ body {
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     padding: 0 1rem;
     background-color: var(--glass-bg);
@@ -234,7 +234,7 @@ body {
         border: none;
         background-color: transparent;
         color: var(--text-primary);
-        font-size: clamp(0.4rem, 1.3vw, 1.125rem);
+        font-size: clamp(0.2rem, 1.2vw, 1.125rem);
         font-weight: 600;
         cursor: pointer;
         transition: all var(--transition-fast);
