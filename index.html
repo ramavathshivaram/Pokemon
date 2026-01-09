@@ -25,8 +25,37 @@
     <div class="allContainer">
       <!---------------------------NAVIGATION BAR------------------------------>
       <div class="navigation">
+        <div id="sideBarMenuContainer">
+          <div class="nav">
+            <input type="checkbox" />
+            <svg>
+              <use xlink:href="#menu" />
+              <use xlink:href="#menu" />
+            </svg>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+            <symbol
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 100 56"
+              id="menu"
+            >
+              <path
+                d="M48.33,45.6H18a14.17,14.17,0,0,1,0-28.34H78.86a17.37,17.37,0,0,1,0,34.74H42.33l-21-21.26L47.75,4"
+              />
+            </symbol>
+          </svg>
+          <div id="sideBarMenutogle">
+            <div>      
+              <button id="sideBtnSearch">Search</button>
+              <button id="sideBtnPokemonDetails">Pokemon</button>
+              <button id="sideBtnGame">Game</button>
+              <button id="sideBtnCompare">Compare</button>
+              <button id="sideBtnAbout">Login</button>
+            </div>
+          </div>
+        </div>
         <h3>Pokemon</h3>
-        <div>
+        <div id="mainMenu">
           <button id="search">Search</button>
           <button id="pokemonDetails">Pokemon</button>
           <button id="game">Game</button>
@@ -216,6 +245,8 @@
             <div id="game-wrapper"></div>
           </section>
         </div>
+      <div>
+
       </div>
     </div>
 
