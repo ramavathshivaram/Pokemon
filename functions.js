@@ -83,7 +83,46 @@ export async function displayPokemons(pokemons) {
   if (currentIndex < pokemons.length) {
     observeLastCard(container, pokemons);
   }
+
+  // randomCardSpan();
 }
+
+const randomCardSpan = () => {
+  const container = document.getElementById("cards");
+  const cards = document.querySelectorAll("#searchContainer #cards .card");
+
+  if (!container || cards.length === 0) return;
+
+  // clear old featured cards
+  cards.forEach((card) => card.classList.remove("featured"));
+
+  // get number of columns from computed grid
+  const style = window.getComputedStyle(container);
+  const columns = style.gridTemplateColumns.split(" ").length;
+
+  if (columns < 2) return; // no spanning on very small screens
+
+  const rows = Math.ceil((cards.length / columns) * 2);
+
+  for (let row = 0; row < rows; row++) {
+    const rowStart = row * columns;
+
+    const firstIndex = rowStart;
+    const secondLastIndex = rowStart + columns - 2;
+
+    const candidates = [];
+
+    if (cards[firstIndex]) candidates.push(firstIndex);
+    if (cards[secondLastIndex]) candidates.push(secondLastIndex);
+
+    if (candidates.length === 0) continue;
+
+    const randomIndex =
+      candidates[Math.floor(Math.random() * candidates.length)];
+
+    cards[randomIndex].classList.add("featured");
+  }
+};
 
 export function displaySearchedPokemons(pokemons) {
   let itemsContainer = document.getElementById("cards");
@@ -100,7 +139,7 @@ export function displaySearchedPokemons(pokemons) {
 
 export function filterByType(type) {
   let filteredPokemons = collection.filter((pokemon) =>
-    pokemon.types.some((t) => t.toLowerCase() === type.toLowerCase())
+    pokemon.types.some((t) => t.toLowerCase() === type.toLowerCase()),
   );
   document.getElementById("cards").innerHTML = "";
   currentIndex = 0;
@@ -109,7 +148,7 @@ export function filterByType(type) {
 
 export function displayAsscending() {
   let filteredPokemons = [...collection].sort((a, b) =>
-    a.name.localeCompare(b.name)
+    a.name.localeCompare(b.name),
   );
   document.getElementById("cards").innerHTML = "";
   currentIndex = 0;
@@ -118,7 +157,7 @@ export function displayAsscending() {
 
 export function displayDecending() {
   let filteredPokemons = [...collection].sort((a, b) =>
-    b.name.localeCompare(a.name)
+    b.name.localeCompare(a.name),
   );
   document.getElementById("cards").innerHTML = "";
   currentIndex = 0;
@@ -145,7 +184,7 @@ export function displayPower() {
 
 export function displayExprence() {
   let filteredPokemons = [...collection].sort(
-    (a, b) => b.experience - a.experience
+    (a, b) => b.experience - a.experience,
   );
   document.getElementById("cards").innerHTML = "";
   currentIndex = 0;
@@ -170,7 +209,7 @@ export function powerByType(type) {
   itemsContainer.innerHTML = "";
 
   let filteredPokemons = collection.filter((pokemon) =>
-    pokemon.types.some((t) => t.toLowerCase() === type.toLowerCase())
+    pokemon.types.some((t) => t.toLowerCase() === type.toLowerCase()),
   );
   filteredPokemons.sort((a, b) => b.total - a.total);
 
@@ -184,7 +223,7 @@ function renderListWithSearch(
   containerId,
   items,
   itemClickHandler,
-  placeholder = "Search..."
+  placeholder = "Search...",
 ) {
   const container = document.getElementById(containerId);
   container.innerHTML = `
@@ -210,7 +249,7 @@ function renderListWithSearch(
   searchInput.addEventListener("keyup", () => {
     const filter = searchInput.value.toLowerCase();
     const filtered = items.filter((item) =>
-      item.name.toLowerCase().includes(filter)
+      item.name.toLowerCase().includes(filter),
     );
     renderList(filtered);
   });
@@ -227,13 +266,12 @@ export async function displayAllAbilities() {
       "abilitiesContainer",
       abilities,
       filterByAbility,
-      "Search abilities"
+      "Search abilities",
     );
   } catch (err) {
     console.error("Error fetching abilities:", err);
-    document.getElementById(
-      "abilitiesContainer"
-    ).innerHTML = `<p>Error loading abilities.</p>`;
+    document.getElementById("abilitiesContainer").innerHTML =
+      `<p>Error loading abilities.</p>`;
   }
 }
 
@@ -243,7 +281,7 @@ async function filterByAbility(url) {
     const res = await fetch(url);
     const abilityData = await res.json();
     const pokemonIds = abilityData.pokemon.map((p) =>
-      parseInt(p.pokemon.url.split("/").filter(Boolean).pop())
+      parseInt(p.pokemon.url.split("/").filter(Boolean).pop()),
     );
 
     const filtered = pokemonIds.map((id) => collection[id - 1]).filter(Boolean);
@@ -258,9 +296,8 @@ async function filterByAbility(url) {
     }
   } catch (err) {
     console.error("Error fetching ability data:", err);
-    document.getElementById(
-      "cards"
-    ).innerHTML = `<p>Error loading ability data.</p>`;
+    document.getElementById("cards").innerHTML =
+      `<p>Error loading ability data.</p>`;
   }
 }
 
@@ -274,9 +311,8 @@ export async function displayAllMoves() {
     renderListWithSearch("movesContainer", moves, filterByMove, "Search moves");
   } catch (err) {
     console.error("Error fetching moves:", err);
-    document.getElementById(
-      "movesContainer"
-    ).innerHTML = `<p>Error loading moves.</p>`;
+    document.getElementById("movesContainer").innerHTML =
+      `<p>Error loading moves.</p>`;
   }
 }
 
@@ -286,7 +322,7 @@ export async function filterByMove(url) {
     const res = await fetch(url);
     const moveData = await res.json();
     const pokemonIds = moveData.learned_by_pokemon.map((p) =>
-      parseInt(p.url.split("/").filter(Boolean).pop())
+      parseInt(p.url.split("/").filter(Boolean).pop()),
     );
 
     const filtered = pokemonIds.map((id) => collection[id - 1]).filter(Boolean);
@@ -301,9 +337,8 @@ export async function filterByMove(url) {
     }
   } catch (err) {
     console.error("Error fetching move data:", err);
-    document.getElementById(
-      "cards"
-    ).innerHTML = `<p>Error loading move data.</p>`;
+    document.getElementById("cards").innerHTML =
+      `<p>Error loading move data.</p>`;
   }
 }
 // -------------------------------------------------------------------
@@ -345,11 +380,19 @@ export function displayArceusForms() {
   displayPokemons(filteredArceusPokemon);
 }
 
+let prevRamdomPokemon = null;
+
 export function displayRandomPokemon() {
   const itemsContainer = document.getElementById("cards");
+
+  if (prevRamdomPokemon) {
+    itemsContainer[prevRamdomPokemon].classList.remove("ramdom");
+  }
+  
   const randomIndex = Math.floor(Math.random() * collection.length);
   const randomPokemon = collection[randomIndex];
   const item = createCards(randomPokemon);
+  item.classList.add("ramdom");
   itemsContainer.innerHTML = "";
   currentIndex = 0;
   itemsContainer.appendChild(item);
@@ -374,7 +417,7 @@ export function searchInputPokemon() {
   let filteredCollection = collection.filter(
     (pokemon) =>
       pokemon.name.toLowerCase().includes(input) ||
-      pokemon.id.toString() === input
+      pokemon.id.toString() === input,
   );
   document.getElementById("cards").innerHTML = "";
   currentIndex = 0;
@@ -406,7 +449,7 @@ export function callramdomPokemon() {
   displayRandomPokemon();
   randomInterval = setInterval(() => {
     displayRandomPokemon();
-  }, 1000);
+  }, 1500);
 }
 
 export async function displayLegendaryPokemon() {
@@ -478,7 +521,7 @@ export async function displayAllEvolutions(evolutionLines) {
     {
       rootMargin: "100px",
       threshold: 0.1,
-    }
+    },
   );
 
   evolutionLines.forEach((evolutionLine) => {
@@ -568,7 +611,7 @@ export function checkUser() {
   const password = document.getElementById("password").value;
   let users = JSON.parse(localStorage.getItem("pokemonUsers")) || [];
   const user = users.find(
-    (u) => u.username === username && u.password === password
+    (u) => u.username === username && u.password === password,
   );
 
   if (user) {
@@ -620,7 +663,7 @@ export function displayTypeInfo(type) {
   container.className = "type-card";
 
   let typeData = pokemonTypeDetails.find(
-    (ele) => ele.name.toLowerCase() === type.toLowerCase()
+    (ele) => ele.name.toLowerCase() === type.toLowerCase(),
   );
 
   if (!typeData) {
@@ -712,15 +755,15 @@ export function currentUserLogin(currentUser) {
             (game) => `
             <li>
                 <strong>${game.gameType || "Unknown"}</strong>: ${
-              game.score || 0
-            } points
+                  game.score || 0
+                } points
                 <small>(${
                   game.date
                     ? new Date(game.date).toLocaleDateString()
                     : "Unknown date"
                 })</small>
             </li>
-        `
+        `,
           )
           .join("")
       : "<li>No games played yet</li>";
@@ -737,7 +780,7 @@ export function currentUserLogin(currentUser) {
                   pokemon.id || ""
                 }">×</button>
             </li>
-        `
+        `,
           )
           .join("")
       : "<li>No favorites yet</li>";
@@ -757,10 +800,10 @@ export function currentUserLogin(currentUser) {
                         : "Unknown date"
                     } - 
                     ${login.device || "Unknown device"} (${
-              login.browser || "Unknown browser"
-            })
+                      login.browser || "Unknown browser"
+                    })
                 </li>
-            `
+            `,
           )
           .join("")
       : "<li>No login history</li>";
@@ -774,7 +817,7 @@ export function currentUserLogin(currentUser) {
             <li>
                 <strong>Q${i + 1}:</strong> ${q.question || "No question set"}
             </li>
-        `
+        `,
           )
           .join("")
       : "<li>No security questions set</li>";
@@ -869,15 +912,15 @@ export function currentUserLogin(currentUser) {
       const pokemonId = parseInt(e.target.dataset.id, 10);
 
       safeUser.favaratePokeom = safeUser.favaratePokeom.filter(
-        (fav) => fav.id !== pokemonId
+        (fav) => fav.id !== pokemonId,
       );
 
       saveUsers(
         users.map((u) =>
           u.username === safeUser.username
             ? { ...u, favaratePokeom: safeUser.favaratePokeom }
-            : u
-        )
+            : u,
+        ),
       );
 
       currentUserLogin(safeUser);
@@ -905,8 +948,8 @@ export function currentUserLogin(currentUser) {
           users.map((u) =>
             u.username === safeUser.username
               ? { ...u, avatar: safeUser.avatar }
-              : u
-          )
+              : u,
+          ),
         );
         currentUserLogin(safeUser);
       };
@@ -931,8 +974,8 @@ export function currentUserLogin(currentUser) {
       users.map((u) =>
         u.username === safeUser.username
           ? { ...u, securityQuestions: safeUser.securityQuestions }
-          : u
-      )
+          : u,
+      ),
     );
     currentUserLogin(safeUser);
     alert("Security question saved!");
@@ -954,8 +997,8 @@ export function currentUserLogin(currentUser) {
       users.map((u) =>
         u.username === safeUser.username
           ? { ...u, preferences: safeUser.preferences }
-          : u
-      )
+          : u,
+      ),
     );
     // Refresh profile UI
     currentUserLogin(safeUser);
@@ -965,7 +1008,7 @@ export function currentUserLogin(currentUser) {
   document.getElementById("deleteAccount")?.addEventListener("click", () => {
     if (
       confirm(
-        "Are you sure you want to delete your account? This cannot be undone."
+        "Are you sure you want to delete your account? This cannot be undone.",
       )
     ) {
       alert("Account deletion feature coming soon!");
@@ -989,8 +1032,8 @@ function showAddFavoriteModal(safeUser, container) {
           users.map((u) =>
             u.username === safeUser.username
               ? { ...u, favaratePokeom: safeUser.favaratePokeom }
-              : u
-          )
+              : u,
+          ),
         );
         currentUserLogin(safeUser);
       } else {
@@ -1015,7 +1058,7 @@ function showAddFavoriteModal(safeUser, container) {
 export function handleLogin(username, password) {
   const users = JSON.parse(localStorage.getItem("pokemonUsers")) || [];
   const user = users.find(
-    (u) => u.username === username && u.password === password
+    (u) => u.username === username && u.password === password,
   );
 
   if (user) {

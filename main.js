@@ -153,14 +153,13 @@ toggleMappings.forEach(({ triggerId, targetId, extraFunc }) => {
 // --- Dark Mode Toggle ---
 document.body.classList.toggle("dark-mode");
 on("mode", "click", () => {
-
   document.body.classList.toggle("dark-mode");
 
-  let mode= document.getElementById("mode")
-  if(document.body.classList.contains("dark-mode")){
-    mode.innerHTML=`<i class="fa-solid fa-sun"></i>`
-  }else{
-    mode.innerHTML=`<i class="fa-solid fa-moon"></i>`
+  let mode = document.getElementById("mode");
+  if (document.body.classList.contains("dark-mode")) {
+    mode.innerHTML = `<i class="fa-solid fa-sun"></i>`;
+  } else {
+    mode.innerHTML = `<i class="fa-solid fa-moon"></i>`;
   }
 });
 
