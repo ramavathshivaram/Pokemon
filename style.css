@@ -35,8 +35,10 @@
         opacity: 1;
         stroke-dashoffset: 221;
         stroke-dasharray: 46 249;
-        transition: stroke-dashoffset 0.12s linear 0.2s,
-          stroke-dasharray 0.12s linear 0.2s, opacity 0s linear 0.2s;
+        transition:
+          stroke-dashoffset 0.12s linear 0.2s,
+          stroke-dasharray 0.12s linear 0.2s,
+          opacity 0s linear 0.2s;
       }
 
       &:nth-of-type(2) {
@@ -60,8 +62,10 @@
             stroke-dashoffset: 175;
             stroke-dasharray: 0 295;
             opacity: 0;
-            transition: stroke-dashoffset 0.07s linear 0.07s,
-              stroke-dasharray 0.07s linear 0.07s, opacity 0s linear 0.14s;
+            transition:
+              stroke-dashoffset 0.07s linear 0.07s,
+              stroke-dasharray 0.07s linear 0.07s,
+              opacity 0s linear 0.14s;
           }
 
           &:nth-of-type(2) {
@@ -266,11 +270,16 @@ body {
 
   #mainMenu {
     width: 60%;
-    height: 100%;
+    height: calc(100% - 15px);
+    max-width: 500px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    font-size: clamp(0.4rem, 1.5vw, 1.125rem);
+    font-size: clamp(0.5rem, 1.5vw, 1rem);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+    position: relative;
   }
 
   #mode {
@@ -329,7 +338,6 @@ body {
   transition: all var(--transition-fast);
 }
 
-
 #sideBarMenutogle > div {
   display: flex;
   flex-direction: column;
@@ -352,10 +360,9 @@ body {
     0 0 12px rgba(255, 255, 255, 0.25);
 }
 
-#sideBarMenutogle.active{
+#sideBarMenutogle.active {
   left: 0;
 }
-
 
 #searchContainer {
   width: 100%;
@@ -588,8 +595,11 @@ body {
     height: calc(100vh - 120px);
     padding-top: 0.5rem;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-    gap: 0.5rem;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(clamp(140px, 22vw, 220px), 1fr)
+    );
+    gap: clamp(0.3rem, 1vw, 0.8rem);
     overflow-y: auto;
     scrollbar-width: none;
     scroll-behavior: smooth;
@@ -598,9 +608,9 @@ body {
   /* ------------------------------CARD DESIGN-------------------------------- */
   .card {
     width: 100%;
-    height: 230px;
-    max-width: 280px;
+    height: clamp(180px, 28vw, 260px);
     margin: auto;
+    max-width: 250px;
     border-radius: 16px;
     background-color: var(--card-bg);
     border: 2px solid var(--border-color);
@@ -764,7 +774,7 @@ body {
       padding: 0.5rem;
       margin: 0.5rem 0;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 0.5rem;
       border: 1px solid var(--border-color);
       border-radius: 1rem;

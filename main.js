@@ -152,7 +152,17 @@ toggleMappings.forEach(({ triggerId, targetId, extraFunc }) => {
 
 // --- Dark Mode Toggle ---
 document.body.classList.toggle("dark-mode");
-on("mode", "click", () => document.body.classList.toggle("dark-mode"));
+on("mode", "click", () => {
+
+  document.body.classList.toggle("dark-mode");
+
+  let mode= document.getElementById("mode")
+  if(document.body.classList.contains("dark-mode")){
+    mode.innerHTML=`<i class="fa-solid fa-sun"></i>`
+  }else{
+    mode.innerHTML=`<i class="fa-solid fa-moon"></i>`
+  }
+});
 
 // --- Aside Menu Toggle ---
 on("asideMenuContainer", "click", () => {
@@ -183,7 +193,7 @@ on("next", "click", () => updatePokemon(1));
   { id: "specialDefenseBtn", stat: "special-defense" },
   { id: "speedBtn", stat: "speed" },
 ].forEach(({ id, stat }) =>
-  on(id, "click", () => MY_FUNCTIONS.displayStat(stat))
+  on(id, "click", () => MY_FUNCTIONS.displayStat(stat)),
 );
 
 // --- Initial Load ---
@@ -236,7 +246,7 @@ async function callAllPokemons() {
     }
 
     const res = await fetch(
-      "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0"
+      "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0",
     );
     const data = await res.json();
     const allPokemonUrls = data.results.map((p) => p.url);
