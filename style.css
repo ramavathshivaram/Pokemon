@@ -14,6 +14,10 @@
   /* border: 1px solid red; */
 }
 
+*::-webkit-scrollbar {
+  display: none;
+}
+
 .nav {
   background: none;
   width: 100px;
@@ -337,7 +341,7 @@ body {
   z-index: 1000;
   transition: all var(--transition-fast);
 
-  button{
+  button {
     background: var(--backgroundColor);
   }
 }
