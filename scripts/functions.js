@@ -388,7 +388,7 @@ export function displayRandomPokemon() {
   if (prevRamdomPokemon) {
     itemsContainer[prevRamdomPokemon].classList.remove("ramdom");
   }
-  
+
   const randomIndex = Math.floor(Math.random() * collection.length);
   const randomPokemon = collection[randomIndex];
   const item = createCards(randomPokemon);

@@ -1,200 +1,59 @@
-# 🧩 Pokémon Explorer – Single Page Web App
+# 🧩 Pokémon Explorer
 
-A **high-performance Single Page Application (SPA)** built using **pure HTML, CSS, and Vanilla JavaScript (ES6 Modules)**.  
-No frameworks, no build tools. Powered by **PokéAPI**, the app efficiently handles **~1350 Pokémon** derived from **~160,000+ interconnected API links**.
+A high-performance **Single Page Application (SPA)** built with **Vanilla JavaScript, HTML5, and CSS3**. Powered by **PokéAPI**, the application processes and displays **1350+ Pokémon** from **160,000+ interconnected API resources** without using any frontend framework.
 
----
+🌐 **Live Demo:** https://ramavathshivaram.github.io/Pokemon
 
-## 🚀 Highlights
-- Single Page Application (no page reloads)
-- 1350+ Pokémon fully processed and cached
-- ~160,000+ PokéAPI-linked resources handled
-- Zero frameworks (no React / Vue / Angular)
-- Pure Vanilla JavaScript (ES6 modules)
-- Batch loading + LocalStorage caching
+## 🚀 Features
 
----
+* 🔍 Search, filtering, and sorting
+* 📊 Detailed Pokémon stats and species information
+* ⚔️ Side-by-side Pokémon comparison
+* 🧬 Evolution chains, Mega Evolutions, and Gigantamax forms
+* 📘 Moves, abilities, and Pokédex entries
+* ❤️ Favorites system with LocalStorage
+* 🎮 Pokémon Quiz, Type Match, Snake, and Maze games
+* 🌙 Responsive UI with Dark Mode
 
-## 🔍 Data Handling
-- Fetches all Pokémon URLs from PokéAPI
-- Loads data in batches of 20 to avoid throttling
-- Processes species, evolutions, forms, moves, abilities
-- Caches final Pokémon objects in LocalStorage
-- Entire UI updates dynamically inside one HTML page
+## ⚡ Performance
 
----
-
-## 📊 Core Features
-- Pokémon details (stats, power score, height, weight)
-- Species data (egg groups, growth rate, habitat)
-- Weakness & resistance calculation
-- Type-based dynamic theming
-- Previous / Next Pokémon navigation
-
----
-
-## ⚔️ Compare System
-- Side-by-side comparison of two Pokémon
-- Stats, types, weaknesses & resistances
-- Auto-managed comparison queue
-
----
-
-## 🧬 Evolutions
-- Single, double, triple & branched evolutions
-- Mega evolutions
-- Gigantamax forms
-- Visual evolution line rendering
-
----
-
-## 📘 Moves & Abilities
-- Dynamic move listing per Pokémon
-- Detailed move modal (power, accuracy, PP, effects)
-- Ability details with hidden ability detection
-
----
-
-## 📖 Pokédex Bio
-- English Pokédex flavor text
-- Multiple entries per Pokémon
-- Scrollable bio view
-
----
-
-## 🎮 Mini Games
-- Pokémon Quiz  
-- Type Match  
-- Snake Game  
-- Maze Game  
-
----
-
-## 👤 Auth UI (Frontend Only)
-- Login / Register / Forgot Password
-- LocalStorage-based session handling
-
----
+* Batched API requests
+* LocalStorage caching
+* Debounced search
+* Lazy loading
+* DOM fragment rendering
+* Modular ES6 architecture
 
 ## 🛠️ Tech Stack
-HTML5 · CSS3 · JavaScript (ES6) · PokéAPI · ApexCharts · Font Awesome · LocalStorage
 
----
+**Frontend:** HTML5, CSS3, JavaScript (ES6 Modules)
 
-## 📁 Project Structure
-index.html  
-style.css  
-main.js  
-Display.js  
-collectionOfData.js  
-functions.js  
-API.js  
-game.js  
-gameTemplates.js  
-db.js  
-const.js  
-assets/
+**APIs & Libraries:** PokéAPI, ApexCharts, Font Awesome
 
----
+**Storage:** LocalStorage
 
-## ⚙️ Performance
-- Batched API requests
-- LocalStorage caching
-- DOM fragment rendering
-- Minimal reflows
-- No framework overhead
+## ▶️ Run Locally
 
----
+```bash
+git clone https://github.com/ramavathshivaram/Pokemon.git
+cd Pokemon
+```
 
-## ▶️ Run
-Open `index.html`  
-or• Interactive stat cards and navigation  
+Open `index.html` or use:
 
-## ⚔️ Pokémon Comparison
-• Compare two Pokémon side-by-side  
-• Displays stats, types, weaknesses, resistances, and power score  
-• Intelligent comparison queue (maximum two Pokémon at a time)  
+```bash
+live-server
+```
 
-## 🧬 Evolution System
-• Supports no-evolution, two-stage, three-stage, and branched evolutions  
-• Displays full evolution chains dynamically  
-• Mega evolutions detection and ordering  
-• Gigantamax form detection and rendering  
+## 📈 Highlights
 
-## 📘 Moves System
-• Dynamically fetches all Pokémon moves  
-• Scrollable move list  
-• Modal-based move detail view  
-• Displays power, accuracy, PP, type, damage class, and effects  
+* 1350+ Pokémon processed
+* 160,000+ API-linked resources handled
+* Zero frameworks
+* Fully client-side architecture
 
-## 🧠 Abilities System
-• Displays all Pokémon abilities  
-• Hidden ability detection  
-• Ability descriptions, effects, and short effects  
-• Modal-based detailed ability view  
+## 👨‍💻 Author
 
-## 📖 Pokémon Bio System
-• Fetches English Pokédex flavor text  
-• Displays multiple entries per Pokémon  
-• Scrollable bio layout with clean navigation  
+**Shiva Ram**
 
-## 🎮 Mini Games
-• Pokémon Quiz  
-• Type Match Game  
-• Snake Game  
-• Maze Game  
-
-## 👤 User Authentication (Frontend Only)
-• Login, Register, Forgot Password UI  
-• LocalStorage-based session handling  
-• No backend, no framework dependency  
-
-## 🌙 UI / UX
-• Dark mode toggle  
-• Responsive layout  
-• Sidebar navigation  
-• Animated cards  
-• Type-colored UI accents  
-• Font Awesome icons  
-• Modal-based interactions  
-
-## 🛠️ Tech Stack
-HTML5, CSS3, JavaScript (ES6 Modules), PokéAPI, ApexCharts, Font Awesome, LocalStorage API  
-
-## 📁 Project Structure
-index.html  
-style.css  
-main.js  
-Display.js  
-collectionOfData.js  
-functions.js  
-API.js  
-game.js  
-gameTemplates.js  
-db.js  
-const.js  
-assets/sprites  
-assets/types  
-
-## ⚙️ Performance Techniques
-• Batched API requests (20 at a time)  
-• LocalStorage caching of all Pokémon data  
-• DOM Fragment rendering  
-• Progressive UI updates  
-• Minimal reflows and repaints  
-• No framework overhead  
-
-## ▶️ How to Run
-Open index.html directly in a browser or use Live Server  
-npm install -g live-server  
-live-server  
-
-## 🧠 Why This Project Stands Out
-This project demonstrates advanced Vanilla JavaScript skills, large-scale API data processing, performance optimization without frameworks, modular ES6 architecture, and the ability to manage massive linked datasets entirely on the frontend.
-
-## 📜 License
-Open-source project for learning and portfolio use.
-
-## 🙌 Author
-Shiva Ram
-
+GitHub: https://github.com/ramavathshivaram
